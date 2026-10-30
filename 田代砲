@@ -1,0 +1,348 @@
+
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TEST SITE</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: #fff;
+  color: #222;
+  font-family: Arial, "Noto Sans JP", sans-serif;
+}
+
+header {
+  height: 65px;
+  padding: 0 7%;
+  border-bottom: 1px solid #eee;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  font-size: 18px;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.header-right {
+  color: #888;
+  font-size: 12px;
+}
+
+main {
+  max-width: 850px;
+  margin: 65px auto;
+  padding: 0 22px;
+}
+
+.tag {
+  font-size: 11px;
+  color: #888;
+  letter-spacing: 3px;
+}
+
+h1 {
+  font-size: 34px;
+  margin: 16px 0 10px;
+}
+
+.description {
+  color: #888;
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.card {
+  border: 1px solid #eaeaea;
+  border-radius: 12px;
+  padding: 24px;
+  margin-top: 30px;
+}
+
+.card-title {
+  font-size: 14px;
+  font-weight: bold;
+  margin-bottom: 22px;
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+.dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #20b879;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 13px;
+  margin-top: 22px;
+}
+
+.item {
+  border: 1px solid #eee;
+  border-radius: 9px;
+  padding: 18px;
+  min-width: 0;
+}
+
+.label {
+  font-size: 12px;
+  color: #888;
+}
+
+.value {
+  font-size: 24px;
+  font-weight: bold;
+  margin-top: 10px;
+  overflow-wrap: anywhere;
+}
+
+.unit {
+  font-size: 12px;
+  color: #888;
+  font-weight: normal;
+}
+
+button {
+  margin-top: 22px;
+  padding: 12px 20px;
+  background: #222;
+  color: white;
+  border: none;
+  border-radius: 7px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+button:active {
+  background: #555;
+}
+
+.log {
+  font-size: 12px;
+  color: #777;
+  line-height: 2;
+}
+
+footer {
+  border-top: 1px solid #eee;
+  padding: 25px;
+  text-align: center;
+  color: #aaa;
+  font-size: 11px;
+  margin-top: 70px;
+}
+
+@media(max-width: 450px) {
+  h1 { font-size: 28px; }
+  .value { font-size: 20px; }
+  main { margin-top: 45px; }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+  <div class="logo">TEST SITE.</div>
+  <div class="header-right">SYSTEM MONITOR</div>
+</header>
+
+<main>
+
+  <div class="tag">WELCOME / TEST ENVIRONMENT</div>
+
+  <h1>テスト用サイト</h1>
+
+  <p class="description">
+    このページは動作確認・通信テスト用のシンプルなサイトです。<br>
+    システムの状態やページの読み込み状況を確認できます。
+  </p>
+
+  <section class="card">
+    <div class="card-title">システム状態</div>
+
+    <div class="status">
+      <div class="dot" id="dot"></div>
+      <span id="status">オンライン</span>
+    </div>
+
+    <div class="grid">
+
+      <div class="item">
+        <div class="label">読み込み時間</div>
+        <div class="value" id="load">--<span class="unit"> ms</span></div>
+      </div>
+
+      <div class="item">
+        <div class="label">通信状態</div>
+        <div class="value" id="network">--</div>
+      </div>
+
+      <div class="item">
+        <div class="label">リソース数</div>
+        <div class="value" id="resources">--</div>
+      </div>
+
+      <div class="item">
+        <div class="label">経過時間</div>
+        <div class="value" id="elapsed">0<span class="unit"> 秒</span></div>
+      </div>
+
+      <div class="item">
+        <div class="label">通信タイプ</div>
+        <div class="value" id="type">--</div>
+      </div>
+
+      <div class="item">
+        <div class="label">推定通信速度</div>
+        <div class="value" id="speed">--</div>
+      </div>
+
+    </div>
+
+    <button onclick="location.reload()">ページを再読み込み ↻</button>
+  </section>
+
+  <section class="card">
+    <div class="card-title">アクセスログ</div>
+    <div class="log" id="logs">
+      [SYSTEM] ページを初期化しています...
+    </div>
+  </section>
+
+  <section class="card">
+    <div class="card-title">負荷・パフォーマンス情報</div>
+    <p class="description">
+      このページのブラウザ側の情報を表示しています。
+      サーバーのCPU使用率やサーバー全体の負荷は取得していません。
+    </p>
+    <div class="grid">
+      <div class="item">
+        <div class="label">JavaScript実行環境</div>
+        <div class="value" id="js">正常</div>
+      </div>
+      <div class="item">
+        <div class="label">画面サイズ</div>
+        <div class="value" id="screen">--</div>
+      </div>
+      <div class="item">
+        <div class="label">メモリ使用量</div>
+        <div class="value" id="memory">非対応</div>
+      </div>
+      <div class="item">
+        <div class="label">ページ状態</div>
+        <div class="value" id="visibility">表示中</div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  TEST SITE. / SIMPLE MONITORING SYSTEM
+</footer>
+
+<script>
+const start = performance.now();
+const logs = document.getElementById("logs");
+
+function addLog(message) {
+  const time = new Date().toLocaleTimeString("ja-JP");
+  logs.innerHTML += "<br>[" + time + "] " + message;
+}
+
+function update() {
+  const online = navigator.onLine;
+
+  document.getElementById("status").textContent =
+    online ? "オンライン" : "オフライン";
+
+  document.getElementById("dot").style.background =
+    online ? "#20b879" : "#e05252";
+
+  document.getElementById("network").textContent =
+    online ? "接続あり" : "接続なし";
+
+  document.getElementById("elapsed").innerHTML =
+    Math.floor((performance.now() - start) / 1000) +
+    '<span class="unit"> 秒</span>';
+
+  const connection =
+    navigator.connection ||
+    navigator.mozConnection ||
+    navigator.webkitConnection;
+
+  document.getElementById("type").textContent =
+    connection ? (connection.effectiveType || "不明") : "非対応";
+
+  document.getElementById("speed").textContent =
+    connection && connection.downlink
+    ? connection.downlink + " Mbps"
+    : "不明";
+
+  document.getElementById("resources").textContent =
+    performance.getEntriesByType("resource").length;
+
+  document.getElementById("screen").textContent =
+    window.innerWidth + "×" + window.innerHeight;
+
+  document.getElementById("visibility").textContent =
+    document.hidden ? "非表示" : "表示中";
+
+  const memory = performance.memory;
+
+  document.getElementById("memory").textContent =
+    memory
+    ? Math.round(memory.usedJSHeapSize / 1048576) + " MB"
+    : "非対応";
+}
+
+window.addEventListener("load", function() {
+  const timing = performance.getEntriesByType("navigation")[0];
+
+  document.getElementById("load").innerHTML =
+    (timing ? Math.round(timing.loadEventEnd - timing.startTime) : "--") +
+    '<span class="unit"> ms</span>';
+
+  addLog("ページの読み込みが完了しました");
+  addLog("システム状態を確認しました");
+  update();
+});
+
+window.addEventListener("online", function() {
+  addLog("ネットワーク接続を検知しました");
+  update();
+});
+
+window.addEventListener("offline", function() {
+  addLog("ネットワーク切断を検知しました");
+  update();
+});
+
+document.addEventListener("visibilitychange", update);
+
+setInterval(update, 1000);
+update();
+</script>
+
+</body>
+</html>
